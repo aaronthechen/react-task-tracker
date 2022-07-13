@@ -56,9 +56,11 @@ const App = () => {
 
     console.log(res)
 
-    res.status === 200
-      ? setTasks(tasks.filter((task) => task.id !== id))
-      : alert('Error Deleting This Task')
+   res.status === 200 ? 
+    setTasks(tasks.filter((task) => task.id !== id))
+    :
+    alert(`Error deleting task. ID: ${id}`)
+      
   }
 
   const changeFilterMode = (newfilter) => {
@@ -79,11 +81,12 @@ const App = () => {
 
     const data = await res.json()
 
+    res.status === 200 ?
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, reminder: data.reminder } : task
       )
-    )
+    ) : alert(`Error setting reminder. Task: ${id}, New: ${!taskToToggle.reminder}`)
   }
 
   return (
