@@ -5,9 +5,11 @@ import Footer from './components/Footer'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
 import About from './components/About'
+import Filter from './components/Filter'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
+  const [currentFilter, setCurrentFilter] = useState("none")
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
@@ -52,9 +54,15 @@ const App = () => {
       method: 'DELETE',
     })
 
+    console.log(res)
+
     res.status === 200
       ? setTasks(tasks.filter((task) => task.id !== id))
       : alert('Error Deleting This Task')
+  }
+
+  const changeFilterMode = (newfilter) => {
+   setCurrentFilter(newfilter)
   }
 
   const toggleReminder = async (id) => {
@@ -90,16 +98,21 @@ const App = () => {
             path='/'
             element={
               <>
+                <Filter currentFilter={currentFilter} setFilter={changeFilterMode}/>
                 {showAddTask && <AddTask onAdd={addTask} />}
                 {tasks.length > 0 ? (
                   <Tasks
                     tasks={tasks}
                     onDelete={deleteTask}
                     onToggle={toggleReminder}
+                    currentFilter={currentFilter}
                   />
                 ) : (
                   'No Tasks To Show'
                 )}
+
+
+
               </>
             }
           />
