@@ -1,10 +1,10 @@
 import Task from './Task'
 
 const Tasks = ({ tasks, onDelete, onToggle, currentFilter }) => {
+  // Check if the current task passes the filter criteria 
   const predicate = (taskobj) => {
     switch (currentFilter) {
       case "none":
-        //console.log(`CURRENT FILTER: ${currentFilter}. RETURNING TRUE FOR ${taskobj}`)
         return true
         break;
       case "reminders":
